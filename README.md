@@ -97,6 +97,14 @@ It uses the original LIGGGHTS-PUBLIC and some input from the LIGGGHTS-PUBLIC for
 
 * A C++11 and OpenMP >= 3 compliant compiler (e.g. GCC 4.8)
 
+For Windows:
+* Visual Studio (tested with VS 2015)
+* for parallel computation [MS MPI](https://msdn.microsoft.com/en-us/library/bb524831%28v=vs.85%29.aspx)
+* [Cygwin](https://www.cygwin.com/) with GIT and CMAKE package
+* Any git tool, e.g. [git-for-windows](https://git-for-windows.github.io/)
+    * Take care that you checkout **as-is** and push **unix-style**.
+	  The shell-scripts that are necessary for compilation work only with unix-style line endings!
+
 <a name="installation"></a>
 
 ## Installation
@@ -111,13 +119,23 @@ The benefit of using CMake is that it works on more platforms and it can automat
 detect the paths of required libraries. E.g. on Linux it will find the VTK library if
 it is installed:
 
-1. Configure using CMake
+1. Configure using CMake (in the terminal or cygwin)
 
 	```bash
 	mkdir src-build
   cd src-build
   cmake ../src
 	```
+
+#### Windows
+
+2. Compile using Visual Studio
+
+    Open the visual studio file that was generated in your build directory (src-build).
+	Change the build to RELEASE and build the whole project map. This will generate the 
+	executable `liggghts.exe` in your build directory.
+
+#### Linux
 
 2. Compile using Make
 
@@ -132,7 +150,7 @@ it is installed:
 	```
 	
 	Note that unlike the LIGGGHTS-PUBLIC fork of ParticulateFlow, this will create
-	again one big binary file `liggghts`, because the required code change for Windows would be to big.
+	again one big binary file `liggghts`, because the required code change for Windows would be to big (annoying ;) ) .
 	
 3. Installation (optional)
 
@@ -150,10 +168,10 @@ it is installed:
 
 <a name="classic-compilation"></a>
 
-### Classic Compilation (discouraged)
+### Classic Compilation (discouraged - Linux only)
 
-For historic reasons, there is also a classic LIGGGHTS Makefile "ubuntu" to compile it
-the old way. This will create one large binary called `lmp_ubuntu`. Before compilation
+The classic LIGGGHTS Makefile "ubuntu" still works to compile LIGGGHTS.
+This will create one large binary called `lmp_ubuntu`. Before compilation
 the file `MAKE/Makefile.ubuntu` has to be edited manually to correct any library
 installation paths.
 
