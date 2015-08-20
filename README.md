@@ -1,3 +1,4 @@
+```
 ----------------------------------------------------------------------
 This is the
 
@@ -72,3 +73,91 @@ under the terms of the GNU Public License (GPL).
 The primary author of the code is Steve Plimpton, who can be emailed
 at sjplimp@sandia.gov.  The LAMMPS WWW Site at lammps.sandia.gov has
 more information about the code and its uses.
+
+```
+
+# LIGGGHTS under WINDOWS
+
+This fork of the LIGGGHTS software package is **my working fork** for a compilation under Windows.
+It uses the original LIGGGHTS-PUBLIC and some input from the LIGGGHTS-PUBLIC fork of ParticulateFlow.
+
+**Table of Contents:**
+
+* [Prerequisites](#prerequisites)
+* [Installation](#installation)
+  * [CMake Compilation](#cmake-compilation)
+  * [Classic Compilation (discouraged)](#classic-compilation)
+* [Using Binaries created with CMake](#using-cmake-binaries)
+  
+----------------------------------------------------------------------
+
+<a name="prerequisites"></a>
+
+## Prerequisites
+
+* A C++11 and OpenMP >= 3 compliant compiler (e.g. GCC 4.8)
+
+<a name="installation"></a>
+
+## Installation
+
+There are two ways of compiling this LIGGGHTS version. The classic method of using a
+customized Makefile and a newer (recommended) way of using CMake.
+
+<a name="cmake-compilation"></a>
+
+### CMake Compilation
+The benefit of using CMake is that it works on more platforms and it can automatically
+detect the paths of required libraries. E.g. on Linux it will find the VTK library if
+it is installed:
+
+1. Configure using CMake
+
+	```bash
+	mkdir src-build
+  cd src-build
+  cmake ../src
+	```
+
+2. Compile using Make
+
+	Serial compilation:
+	```bash
+	make
+	```
+
+	Parallel compilation (e.g. 4 processes):
+	```bash
+	make -j 4
+	```
+	
+	Note that unlike the LIGGGHTS-PUBLIC fork of ParticulateFlow, this will create
+	again one big binary file `liggghts`, because the required code change for Windows would be to big.
+	
+3. Installation (optional)
+
+	To install the generated LIGGGHTS binary to a specific location,
+	an installation prefix can be defined during CMake configuration. E.g.
+
+	```bash
+	cmake ../src -DCMAKE_INSTALL_PREFIX=/opt/liggghts/
+	```
+	Using this configuration, compile using make and install to the target location using
+
+	```bash
+	make install
+	```
+
+<a name="classic-compilation"></a>
+
+### Classic Compilation (discouraged)
+
+For historic reasons, there is also a classic LIGGGHTS Makefile "ubuntu" to compile it
+the old way. This will create one large binary called `lmp_ubuntu`. Before compilation
+the file `MAKE/Makefile.ubuntu` has to be edited manually to correct any library
+installation paths.
+
+```bash
+cd src
+make ubuntu
+```
